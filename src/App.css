@@ -1,38 +1,88 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+#appContainer {
   min-height: 100vh;
+  min-width: 100vw;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  flex-direction: column;
+}
+
+#Generate {
+  background: #1c1610;
+  margin-top: 30px;
+  padding: 13px 40px;
+  cursor: pointer;
+  font-size: 15px;
+  border: none;
+  outline: none;
+  border-radius: 3px;
+  color: white;
+  box-shadow: 0 0 10px rgb(0 0 0 / 55%);
+}
+
+#card {
+  min-height: 400px;
+  position: relative;
+  width: 330px;
+  display: flex;
+  justify-content: center;
+  background: salmon;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 25px rgb(0 0 0 / 30%);
+}
+
+#halfCircle {
+  height: 148px;
+  position: absolute;
+
+  width: 100%;
+  border-bottom-left-radius: 20rem;
+  border-bottom-right-radius: 20rem;
+}
+
+#HP {
+  background: white;
+  padding: 10px;
+  border-radius: 100px;
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  width: 65px;
+  align-items: center;
+  top: 5%;
+  right: 5%;
+}
+
+#pokemon {
+  position: absolute;
+  text-align: center;
+  top: 40px;
+}
+
+img {
+  height: 180px;
+}
+
+#typesContainer {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  position: absolute;
+  top: 68%;
+}
+
+.types {
+  padding: 5px 20px;
+  border-radius: 50px;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#stats {
+  position: absolute;
+  bottom: 7%;
+  text-align: center;
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
 }
