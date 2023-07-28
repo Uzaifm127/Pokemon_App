@@ -5,21 +5,32 @@ import Button from "./components/Button";
 import "./App.css";
 
 function App() {
-  const [apiData, setApiData] = useState();
-  const [pokemonId, setPokemonId] = useState(0o1); // ask after
+  const [pokemonData, setPokemonData] = useState();
+  const [typesData, setTypesData] = useState();
+  const [pokemonId, setPokemonId] = useState(0o1);
 
   const randomId = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1) + min);
   };
 
   useEffect(() => {
-    const url = `https://pokeapi.co/api/v2/pokemon/${pokemonId}`;
-    axios.get(url).then((response) => setApiData(response.data));
+    const pokemonUrl = `https://pokeapi.co/api/v2/pokemon/${pokemonId}`;
+
+    axios.get(pokemonUrl).then((response) => setPokemonData(response.data));
   }, [pokemonId]);
+
+  useEffect(() => {
+    const typesUrl = `https://pokeapi.co/api/v2/type/${
+      pokemonData ? pokemonData.types[0].type.name : "grass"
+    }/`;
+    axios.get(typesUrl).then((response) => setTypesData(response.data));
+  }, [pokemonData]);
 
   const generateEvent = () => {
     setPokemonId(randomId(1, 898));
   };
+
+  console.log(typesData);
 
   const typeColors = {
     normal: "#A8A77A",
@@ -46,17 +57,12 @@ function App() {
     <>
       <main id="appContainer">
         <Card
-          pokemonId={
-            pokemonId >= 100
-              ? pokemonId
-              : pokemonId >= 10 && pokemonId < 100
-              ? "0" + pokemonId
-              : "00" + pokemonId
-          }
-          pokemonName={apiData && apiData.name}
+          h4Content="Weak Against"
+          pokemonId={pokemonId}
+          pokemonName={pokemonData && pokemonData.name}
           typesArray={
-            apiData &&
-            apiData.types.map((element, index) => {
+            pokemonData &&
+            pokemonData.types.map((element, index) => {
               return (
                 <div
                   className="types"
@@ -68,12 +74,37 @@ function App() {
               );
             })
           }
-          halfCircleStyle={apiData && typeColors[apiData.types[0].type.name]}
-          Attack={apiData && apiData.stats[1].base_stat}
-          Defense={apiData && apiData.stats[2].base_stat}
-          Speed={apiData && apiData.stats[5].base_stat}
-          HP={apiData && apiData.stats[0].base_stat}
-          alt={apiData && apiData && apiData.name}
+          weakTypesArray={
+            typesData &&
+            typesData.damage_relations.double_damage_from.map(
+              (element, index) => {
+                return (
+                  <div
+                    className="types"
+                    key={index}
+                    style={{ backgroundColor: typeColors[element.name] }}
+                  >
+                    {element.name}
+                  </div>
+                );
+              }
+            )
+          }
+          halfCircleStyle={
+            pokemonData && typeColors[pokemonData.types[0].type.name]
+          }
+          Attack={pokemonData && pokemonData.stats[1].base_stat}
+          Defense={pokemonData && pokemonData.stats[2].base_stat}
+          Speed={pokemonData && pokemonData.stats[5].base_stat}
+          HP={pokemonData && pokemonData.stats[0].base_stat}
+          ID={
+            pokemonId >= 100
+              ? pokemonId
+              : pokemonId >= 10 && pokemonId < 100
+              ? "0" + pokemonId
+              : "00" + pokemonId
+          }
+          alt={pokemonData && pokemonData.name}
         />
         <Button btnContent="Generate" clickEvent={generateEvent} />
       </main>
