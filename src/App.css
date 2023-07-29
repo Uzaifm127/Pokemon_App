@@ -7,19 +7,6 @@
   flex-direction: column;
 }
 
-#Generate {
-  background: #1c1610;
-  margin-top: 30px;
-  padding: 13px 40px;
-  cursor: pointer;
-  font-size: 15px;
-  border: none;
-  outline: none;
-  border-radius: 3px;
-  color: white;
-  box-shadow: 0 0 10px rgb(0 0 0 / 55%);
-}
-
 #card {
   min-height: 515px;
   position: relative;
@@ -40,18 +27,6 @@
   border-bottom-right-radius: 20rem;
 }
 
-#HP {
-  background: white;
-  padding: 10px;
-  border-radius: 100px;
-  position: absolute;
-  display: flex;
-  justify-content: space-between;
-  width: 65px;
-  align-items: center;
-  top: 5%;
-  right: 5%;
-}
 #ID {
   background: white;
   padding: 9px 10px;
@@ -65,10 +40,23 @@
   left: 5%;
 }
 
+#HP {
+  background: white;
+  padding: 10px;
+  border-radius: 100px;
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  width: 65px;
+  align-items: center;
+  top: 5%;
+  right: 5%;
+}
+
 #pokemon {
   position: absolute;
   text-align: center;
-  top: 40px;
+  top: 7.781162583501601%;
 }
 
 img {
@@ -81,6 +69,15 @@ img {
   width: 100%;
   position: absolute;
   top: 53%;
+}
+
+#weakAgainst {
+  position: absolute;
+  top: 62%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 
 #weakTypes {
@@ -108,11 +105,60 @@ img {
   width: 100%;
 }
 
-#weakAgainst {
-  position: absolute;
-  top: 62%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
+#Generate {
+  background: #1c1610;
+  margin-top: 30px;
+  padding: 13px 40px;
+  cursor: pointer;
+  font-size: 15px;
+  border: none;
+  outline: none;
+  border-radius: 3px;
+  color: white;
+  box-shadow: 0 0 10px rgb(0 0 0 / 55%);
+}
+
+@media (max-width: 375px) {
+  #card {
+    min-height: 490px;
+    width: 255px;
+  }
+
+  #ID {
+    padding: 6px 7px;
+    width: 57px;
+    top: 8%;
+  }
+
+  #HP {
+    padding: 7px;
+    width: 57px;
+    top: 8%;
+    right: 5%;
+  }
+
+  #pokemon {
+    top: 12%;
+  }
+
+  img {
+    height: 140px;
+  }
+
+  #typesContainer {
+    top: 51%;
+  }
+
+  #weakAgainst {
+    top: 60%;
+  }
+
+  #weakTypes {
+    row-gap: 10px;
+    width: 100%;
+  }
+
+  .types {
+    padding: 4px 18px;
+  }
 }
