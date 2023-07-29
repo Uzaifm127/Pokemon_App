@@ -30,8 +30,6 @@ function App() {
     setPokemonId(randomId(1, 898));
   };
 
-  console.log(typesData);
-
   const typeColors = {
     normal: "#A8A77A",
     fire: "#FF903E",
