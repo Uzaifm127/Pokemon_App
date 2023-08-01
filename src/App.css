@@ -7,6 +7,17 @@
   flex-direction: column;
 }
 
+#pokemonInput {
+  border: none;
+  outline: none;
+  padding: 8px 11px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  width: 330px;
+  font-size: 17px;
+  box-shadow: 0 0 5px rgb(0 0 0 / 55%);
+}
+
 #card {
   min-height: 515px;
   position: relative;
@@ -107,7 +118,8 @@ img {
 
 #Generate {
   background: #1c1610;
-  margin-top: 30px;
+  margin-top: 10px;
+  width: 330px;
   padding: 13px 40px;
   cursor: pointer;
   font-size: 15px;
@@ -119,6 +131,12 @@ img {
 }
 
 @media (max-width: 375px) {
+  #pokemonInput {
+    width: 255px;
+    padding: 7px 8px;
+    font-size: 15px;
+  }
+
   #card {
     min-height: 490px;
     width: 255px;
@@ -160,5 +178,9 @@ img {
 
   .types {
     padding: 4px 18px;
+  }
+
+  #Generate {
+    width: 255px;
   }
 }

@@ -5,29 +5,37 @@ import Button from "./components/Button";
 import "./App.css";
 
 function App() {
+  const [pokemonInput, setPokemonInput] = useState("");
   const [pokemonData, setPokemonData] = useState();
   const [typesData, setTypesData] = useState();
-  const [pokemonId, setPokemonId] = useState(0o1);
+  const [pokemon, setPokemon] = useState(0o1);
 
   const randomId = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1) + min);
   };
 
   useEffect(() => {
-    const pokemonUrl = `https://pokeapi.co/api/v2/pokemon/${pokemonId}`;
+    const pokemonUrl = `https://pokeapi.co/api/v2/pokemon/${pokemon}`;
 
     axios.get(pokemonUrl).then((response) => setPokemonData(response.data));
-  }, [pokemonId]);
+  }, [pokemon]);
 
   useEffect(() => {
-    const typesUrl = `https://pokeapi.co/api/v2/type/${
-      pokemonData ? pokemonData.types[0].type.name : "grass"
-    }/`;
+    const name = pokemonData ? pokemonData.types[0].type.name : "grass";
+    const typesUrl = `https://pokeapi.co/api/v2/type/${name}/`;
     axios.get(typesUrl).then((response) => setTypesData(response.data));
   }, [pokemonData]);
 
   const generateEvent = () => {
-    setPokemonId(randomId(1, 898));
+    setPokemon(randomId(1, 898));
+  };
+
+  const pokemonInpChange = (e) => setPokemonInput(e.target.value);
+
+  const submitPokemonName = (e) => {
+    e.preventDefault();
+    setPokemon(pokemonInput.toLowerCase());
+    setPokemonInput("");
   };
 
   const typeColors = {
@@ -54,9 +62,21 @@ function App() {
   return (
     <>
       <main id="appContainer">
+        <form onSubmit={submitPokemonName}>
+          <input
+            id="pokemonInput"
+            type="text"
+            placeholder="Enter Pokemon"
+            value={pokemonInput}
+            onChange={pokemonInpChange}
+            autoComplete="off"
+            autoCorrect="off"
+            autoCapitalize="off"
+          />
+        </form>
         <Card
           h4Content="Weak Against"
-          pokemonId={pokemonId}
+          pokemonId={typeof pokemon === "number" ? pokemon : pokemonData.id}
           pokemonName={pokemonData && pokemonData.name}
           typesArray={
             pokemonData &&
@@ -96,11 +116,18 @@ function App() {
           Speed={pokemonData && pokemonData.stats[5].base_stat}
           HP={pokemonData && pokemonData.stats[0].base_stat}
           ID={
-            pokemonId >= 100
-              ? pokemonId
-              : pokemonId >= 10 && pokemonId < 100
-              ? "0" + pokemonId
-              : "00" + pokemonId
+            typeof pokemon === "number"
+              ? pokemon >= 100
+                ? pokemon
+                : pokemon >= 10 && pokemon < 100
+                ? "0" + pokemon
+                : "00" + pokemon
+              : pokemonData &&
+                (pokemonData.id >= 100
+                  ? pokemonData.id
+                  : pokemonData.id >= 10 && pokemonData.id < 100
+                  ? "0" + pokemonData.id
+                  : "00" + pokemonData.id)
           }
           alt={pokemonData && pokemonData.name}
         />
