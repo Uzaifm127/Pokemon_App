@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import typeColors from "./components/typeColors";
 import Card from "./components/Card";
 import Button from "./components/Button";
 import "./App.css";
@@ -17,17 +17,24 @@ function App() {
   useEffect(() => {
     const pokemonUrl = `https://pokeapi.co/api/v2/pokemon/${pokemon}`;
 
-    axios.get(pokemonUrl).then((response) => setPokemonData(response.data));
+    fetch(pokemonUrl)
+      .then((res) => res.json())
+      .then((data) => setPokemonData(data));
   }, [pokemon]);
 
   useEffect(() => {
     const name = pokemonData ? pokemonData.types[0].type.name : "grass";
     const typesUrl = `https://pokeapi.co/api/v2/type/${name}/`;
-    axios.get(typesUrl).then((response) => setTypesData(response.data));
+
+    fetch(typesUrl)
+      .then((res) => res.json())
+      .then((data) => {
+        setTypesData(data);
+      });
   }, [pokemonData]);
 
   const generateEvent = () => {
-    setPokemon(randomId(1, 898));
+    setPokemon(randomId(1, 649));
   };
 
   const pokemonInpChange = (e) => setPokemonInput(e.target.value);
@@ -36,27 +43,6 @@ function App() {
     e.preventDefault();
     setPokemon(pokemonInput.toLowerCase());
     setPokemonInput("");
-  };
-
-  const typeColors = {
-    normal: "#A8A77A",
-    fire: "#FF903E",
-    water: "#0095ff",
-    electric: "#F7D02C",
-    grass: "#74E53F",
-    ice: "#96D9D6",
-    fighting: "#ed0900",
-    poison: "#A33EA1",
-    ground: "#E2BF65",
-    flying: "#A98FF3",
-    psychic: "#F95587",
-    bug: "#A6B91A",
-    rock: "#B6A136",
-    ghost: "#735797",
-    dragon: "#6F35FC",
-    dark: "#533f31",
-    steel: "#B7B7CE",
-    fairy: "#D685AD",
   };
 
   return (
@@ -76,7 +62,9 @@ function App() {
         </form>
         <Card
           h4Content="Weak Against"
-          pokemonId={typeof pokemon === "number" ? pokemon : pokemonData.id}
+          imgSrc={
+            pokemonData && pokemonData.sprites.other.dream_world.front_default
+          }
           pokemonName={pokemonData && pokemonData.name}
           typesArray={
             pokemonData &&
